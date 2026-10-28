@@ -6,7 +6,7 @@ drill is a skill pack for coding agents that turns vague ideas into recorded dec
 
 Not grill-me: drill-me bans the first two obvious answers and stress-tests your plan; grill-me only asks you questions about it.
 
-Try it: copy `drill/` and `drill-me/` into `~/.agents/skills/`, then run `/skill:drill`.
+Try it: copy `drill/` and `drill-me/` into `~/.agents/skills/`, then load the drill skill. Any agent that reads `SKILL.md` works — pi, Claude Code, and others.
 
 **Credits**
 - `drill-me` ← [grill-me](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) crossed with [wayfinder](https://github.com/mattpocock/skills/tree/main/skills/engineering/wayfinder), both by Matt Pocock
@@ -31,7 +31,7 @@ drill flips the roles: the human decides, the agent asks. The path to the decisi
 ### Mode 1: `drill-me` — one session, one decision
 
 ```
- you: "be critical" / /skill:drill-me
+ you: "be critical" / load drill-me
    │
    ▼
  skill reads the session → picks a mode (you don't)
@@ -67,10 +67,10 @@ Each question→answer pair becomes a node. Nodes carry `R` (the precise questio
 
 ## Install
 
-Requires the [pi coding agent](https://pi.dev) and Node >= 22.
+No dependencies. Any coding agent that loads `SKILL.md` skills works — the skills live in the standard `~/.agents/skills/` directory.
 
 1. Copy `drill/` and `drill-me/` into `~/.agents/skills/`.
-2. Run `/skill:drill` to load the endless drill (force-load — the phrases "drill deeper" / "megadrill" only work as routing context, not as invocation). For a single decision, run `/skill:drill-me`.
+2. Load the endless drill — in pi: `/skill:drill` (force-load; the phrases "drill deeper" / "megadrill" only work as routing context, not as invocation). In other agents: load `drill/SKILL.md` and say what you want drilled. For a single decision, use `drill-me`.
 
 Quick taste of a drill:
 
