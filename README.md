@@ -1,5 +1,4 @@
-# drill
-![Uploading drill.gif…]()
+# drilld
 
 drill is a skill pack for the pi coding agent that turns vague ideas into recorded decisions by attacking every answer at its weakest point.
 
