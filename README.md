@@ -1,6 +1,6 @@
-# drilld
+# drill
 
-drill is a skill pack for the pi coding agent that turns vague ideas into recorded decisions by attacking every answer at its weakest point.
+drill is a skill pack for coding agents that turns vague ideas into recorded decisions by attacking every answer at its weakest point.
 
 Not grill-me: drill-me bans the first two obvious answers and stress-tests your plan; grill-me only asks you questions about it.
 
