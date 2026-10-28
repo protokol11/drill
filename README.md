@@ -1,11 +1,15 @@
 # drill
 
-drill is a skill pack for coding agents that turns vague ideas into recorded decisions by attacking every answer at its weakest point.
+![Banner: the word "drill" in monospace type, surrounded by cartoon construction workers drilling, hammering, and cutting on a scaffolding site.](assets/drill.gif)
+
+drill is a skill pack for coding agents that turns vague ideas into recorded decisions, one hard question at a time.
 
 Not grill-me: drill-me bans the first two obvious answers and stress-tests your plan; grill-me only asks you questions about it.
 
+Try it: copy `drill/` and `drill-me/` into `~/.agents/skills/`, then run `/skill:drill`.
+
 **Credits**
-- `drill-me` ← [grill-me](https://github.com/mattpocock/skills) by Matt Pocock (skills/productivity/grill-me)
+- `drill-me` ← [grill-me](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) crossed with [wayfinder](https://github.com/mattpocock/skills/tree/main/skills/engineering/wayfinder), both by Matt Pocock
 - `adhd` skill ← [github.com/uditakhourii/adhd](https://github.com/uditakhourii/adhd)
 
 ## What you get
@@ -17,6 +21,8 @@ Not grill-me: drill-me bans the first two obvious answers and stress-tests your 
 ## Why / the problem
 
 Agents say "done" as a claim, not a fact. Plans get nods, not stress tests.
+
+Agents have never fallen, so they have never learned to walk — and a drill can't teach them. What it can do is hand you the raw material: facts, side-paths, scope. The structure feeds you facts; you create the idea.
 
 drill flips the roles: the human decides, the agent asks. The path to the decision stays recorded.
 
@@ -78,9 +84,22 @@ agent: You said "under 200 ms" — on what data volume? At 10× rows the join
 
 Handoff skills are not bundled: `adhd` is a third-party ideation skill (research/prototype handoffs) and is not part of this pack — installing it from [github.com/uditakhourii/adhd](https://github.com/uditakhourii/adhd) is optional; `research` and `prototype` come from your own setup.
 
+Graceful degradation — every feature works at the tier you can support:
+
+| Feature | Needs | Without it |
+|---|---|---|
+| `drill-me` Converge (core) | nothing extra | — |
+| Diverge + Prototype | `prototype` skill from your setup | diverge runs; no throwaway prototype |
+| Full ADHD | `adhd` skill ([optional install](https://github.com/uditakhourii/adhd)) | "go deeper" unavailable |
+| Endless drill map | `.docs/drill/graph.json` (created on first run) | no cross-session memory |
+
 ## Honest status
 
 Status: **working**. Saturation thresholds (`K=2` / `K=5`) are first guesses. Tune them on live drills. `.docs/drill/graph.json` is the only store of drill state — the logic lives in the skill, the graph is the operational interface.
+
+## Contributing
+
+File issues in this repository. Development and contributions follow the MIT license.
 
 ## License
 
