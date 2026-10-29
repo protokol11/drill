@@ -77,6 +77,15 @@ Done when: every criticism got confirmed or dropped with a reason, and the next 
 
 Each question→answer pair becomes a node. Nodes carry `R` (the precise question this node closes), `C` (hard constraints), `P` (preferences). Sharp questions graduate from fog into nodes. When facts run out, the drill hands off to another skill.
 
+## Quick start
+
+```sh
+git clone https://github.com/protokol11/drill.git
+cp -r drill/drill drill/drill-me ~/.agents/skills/
+```
+
+In pi: `/skill:drill` (force-load). Details below.
+
 ## Install
 
 Prerequisites: **None.** No dependencies. Any coding agent that loads `SKILL.md` skills works — the skills live in the standard `~/.agents/skills/` directory (pi, Claude Code, and others).
