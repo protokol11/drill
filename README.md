@@ -1,30 +1,42 @@
 # drill
 
-![Banner: the word "drill" in monospace type, surrounded by cartoon construction workers drilling, hammering, and cutting on a scaffolding site.](assets/drill.gif)
-
 drill is a skill pack for coding agents that turns vague ideas into recorded decisions, one hard question at a time.
 
-Not grill-me: drill-me bans the first two obvious answers and stress-tests your plan; grill-me only asks you questions about it.
-
-Try it: copy `drill/` and `drill-me/` into `~/.agents/skills/`, then load the drill skill. Any agent that reads `SKILL.md` works — pi, Claude Code, and others.
+![Banner: the word "drill" in monospace type, surrounded by cartoon construction workers drilling, hammering, and cutting on a scaffolding site.](assets/drill.gif)
 
 **Credits**
 - `drill-me` ← [grill-me](https://github.com/mattpocock/skills/tree/main/skills/productivity/grill-me) crossed with [wayfinder](https://github.com/mattpocock/skills/tree/main/skills/engineering/wayfinder), both by Matt Pocock
 - `adhd` skill ← [github.com/uditakhourii/adhd](https://github.com/uditakhourii/adhd)
 
-## What you get
+Verify the install worked:
 
-- **Banned hand-waving** → every answer faces one attack drawn from a five-category weakness taxonomy (unclear terms, hidden assumptions, unverified facts, missing criteria, scale not considered).
-- **Criticism ends in a decision** → in `drill`: RESOLVED / REJECTED / WONTFIX, never a polite note. In `drill-me`: every criticism is confirmed or dropped with a reason.
-- **Ideas survive across sessions** → a typed question-graph grows in `.docs/drill/graph.json`, claimed and resumed by any session.
+```sh
+test -f ~/.agents/skills/drill/SKILL.md && test -f ~/.agents/skills/drill-me/SKILL.md && echo "drill installed"
+```
 
-## Why / the problem
+## Contents
 
-Agents say "done" as a claim, not a fact. Plans get nods, not stress tests.
+- [Why](#why)
+- [How it works](#how-it-works)
+- [Install](#install)
+- [Usage](#usage)
+- [Graceful degradation](#graceful-degradation)
+- [Contributing](#contributing)
+- [License](#license)
 
-Agents have never fallen, so they have never learned to walk — and a drill can't teach them. What it can do is hand you the raw material: facts, side-paths, scope. The structure feeds you facts; you create the idea.
+## Why
 
-drill flips the roles: the human decides, the agent asks. The path to the decision stays recorded.
+Agents say "done" as a claim, not a fact. Plans get nods, not stress tests. What a person needs out of a planning session is a **decision**, not another page of notes — and the path to it kept on record.
+
+drill flips the roles: the human decides, the agent asks. It was built by crossing three ingredients:
+
+- **grill-me's form** — one hard question at a time, each with a recommended answer, until the decision is explicit.
+- **wayfinder's map** — a typed question-graph (`.docs/drill/graph.json`) that any session can claim, grow, and resume.
+- **a ban on the obvious** — the first two obvious answers to every question are rejected outright, so the discussion can't stall on hand-waving.
+
+Scope: decision-making and idea stress-testing for coding agents. Non-scope: writing or reviewing code, and ideation beyond the drill — those hand off to `adhd` / `research` / `prototype`.
+
+Known limit: saturation thresholds (`K=2` / `K=5`) are first guesses — tune them on live drills.
 
 ## How it works
 
@@ -67,12 +79,18 @@ Each question→answer pair becomes a node. Nodes carry `R` (the precise questio
 
 ## Install
 
-No dependencies. Any coding agent that loads `SKILL.md` skills works — the skills live in the standard `~/.agents/skills/` directory.
+Prerequisites: **None.** No dependencies. Any coding agent that loads `SKILL.md` skills works — the skills live in the standard `~/.agents/skills/` directory (pi, Claude Code, and others).
 
 1. Copy `drill/` and `drill-me/` into `~/.agents/skills/`.
-2. Load the endless drill — in pi: `/skill:drill` (force-load; the phrases "drill deeper" / "megadrill" only work as routing context, not as invocation). In other agents: load `drill/SKILL.md` and say what you want drilled. For a single decision, use `drill-me`.
+2. Run the check from the top of this file — it should print `drill installed`.
 
-Quick taste of a drill:
+Handoff skills are not bundled: `adhd` is a third-party ideation skill ([optional install](https://github.com/uditakhourii/adhd)); `research` and `prototype` come from your own setup.
+
+## Usage
+
+Load the endless drill — in pi: `/skill:drill` (force-load; the phrases "drill deeper" / "megadrill" only work as routing context, not as invocation). In other agents: load `drill/SKILL.md` and say what you want drilled. For a single decision, use `drill-me`.
+
+A quick taste of a drill:
 
 ```
 agent: What exactly does "fast" mean for this endpoint?
@@ -82,9 +100,11 @@ agent: You said "under 200 ms" — on what data volume? At 10× rows the join
  you: REJECTED — benchmark first, then set the number.
 ```
 
-Handoff skills are not bundled: `adhd` is a third-party ideation skill (research/prototype handoffs) and is not part of this pack — installing it from [github.com/uditakhourii/adhd](https://github.com/uditakhourii/adhd) is optional; `research` and `prototype` come from your own setup.
+Criticism ends in a decision: `drill` appends RESOLVED / REJECTED / WONTFIX to the ledger, never a polite note; `drill-me` confirms or drops every criticism with a reason.
 
-Graceful degradation — every feature works at the tier you can support:
+## Graceful degradation
+
+Every feature works at the tier you can support:
 
 | Feature | Needs | Without it |
 |---|---|---|
@@ -93,13 +113,9 @@ Graceful degradation — every feature works at the tier you can support:
 | Full ADHD | `adhd` skill ([optional install](https://github.com/uditakhourii/adhd)) | "go deeper" unavailable |
 | Endless drill map | `.docs/drill/graph.json` (created on first run) | no cross-session memory |
 
-## Honest status
-
-Status: **working**. Saturation thresholds (`K=2` / `K=5`) are first guesses. Tune them on live drills. `.docs/drill/graph.json` is the only store of drill state — the logic lives in the skill, the graph is the operational interface.
-
 ## Contributing
 
-File issues in this repository. Development and contributions follow the MIT license.
+File issues in this repository. There is no test suite — skills are validated by running them against a live planning session; development and contributions follow the MIT license.
 
 ## License
 
